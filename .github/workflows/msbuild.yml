@@ -1,0 +1,20 @@
+
+name: msbuild
+
+on:
+  push:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    name: VS 2019 x64 Debug
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - name: msbuild x64 Debug 
+      run: |
+        msbuild.exe Project2.sln /t:Rebuild /p:Configuration=Debug /property:Platform=x64 /p:ForceImportBeforeCppTargets="C:/Program Files (x86)/Microsoft Visual Studio/2019/EnterpriseMSBuild/Microsoft/VC/v160"
