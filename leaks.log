@@ -1,0 +1,5 @@
+4 memory leaks detected. 
+Allocation Address: 0000024BE5301FFC, Return Address: 00007FF6ACFF13D5, File: D:\Courses\CS315-projects\project-2-template\project2\main.cpp, Line: 41, Size: 8192
+Allocation Address: 0000024BE54A1FD8, Return Address: 00007FF6ACFF13D5, File: D:\Courses\CS315-projects\project-2-template\project2\main.cpp, Line: 41, Size: 8192
+Allocation Address: 0000024BE54B1FF8, Return Address: 00007FF6ACFF13D5, File: D:\Courses\CS315-projects\project-2-template\project2\main.cpp, Line: 41, Size: 8192
+Allocation Address: 0000024BE54C1FF0, Return Address: 00007FF6ACFF4BE3, File: d:\agent\_work\5\s\src\vctools\crt\github\stl\src\locale0.cpp, Line: 73, Size: 8192

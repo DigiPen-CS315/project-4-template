@@ -1,27 +1,33 @@
-#include <iostream>
-#include <cstring>
-
-#include "tests.h"
-#include "SomeUsefulIncludes.h"
 
 // Scenarios
-// BEGIN: DO NOT TO MODIFY THIS FILE
+// BEGIN: DO NOT MODIFY THIS FILE
 /*****************************************************************************/
 
+#include <iostream>
+#include <cstring>
+#include <new>
+
+#include "tests.h"
+#include "Project2Helper.h"
+
+#if defined (__clang__)
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmismatched-new-delete"
+
+#endif
+
 #if INTPTR_MAX == INT64_MAX
-//1 TB
-#define UNSERVICEABLE_VALUE 0xF000000000000000
+//~9 Exabytes (~9223372 TB)
+#define UNSERVICEABLE_VALUE 0x7FFFFFFFFFFFFFFF
 #else
 //4GB
 #define UNSERVICEABLE_VALUE 0xF0000000
 #endif
 
-#define UNUSED(expr) do { (void)(expr); } while (0)
-
-
 /* Memory Leaks */
 // DO NOT MODIFY
-static double* project2_leaks_helper()
+double* project2_leaks_helper()
 {
 	return new double;
 }
@@ -79,6 +85,8 @@ void project2_writeoverflow()
 	}
 
 	delete[] ints;
+	std::cout << "If this triggers, you will fail Scenario 'Write Overflow'. " << GET_LINE_INFO() << std::endl;
+	DEBUG_BREAKPOINT();
 }
 
 // DO NOT MODIFY
@@ -98,6 +106,8 @@ void project2_readoverflow()
 	}
 
 	delete[] ints;
+	std::cout << "If this triggers, you will fail Scenario 'Read Overflow'. " << GET_LINE_INFO() << std::endl;
+	DEBUG_BREAKPOINT();
 }
 
 /*****************************************************************************/
@@ -122,7 +132,7 @@ void project2_deletedmemoryread()
 	delete i;
 
 	// Read Access to Deleted Pointer
-	printf("Deleted i is: %d\n", *i);
+	std::cout << "Deleted i is: " << *i << std::endl;
 }
 
 /*****************************************************************************/
@@ -152,7 +162,7 @@ void project2_doublevectordelete()
 /* Mismatched new/delete[] and new[]/delete */
 
 // DO NOT MODIFY
-void project2_newvectordelete()
+void project2_vectornew_scalardelete()
 {
 	int* ints = new int[2];
 
@@ -161,7 +171,7 @@ void project2_newvectordelete()
 }
 
 // DO NOT MODIFY
-void project2_newdeletevector()
+void project2_scalarnew_vectordelete()
 {
 	int* ints = new int;
 
@@ -197,7 +207,7 @@ void project2_randompointer2()
 	delete bad_i;
 }
 
-/************************************d****************************************/
+/*****************************************************************************/
 /* GOOD Usage - There is nothing wrong with this test */
 
 // DO NOT MODIFY
@@ -237,10 +247,10 @@ void project2_good()
 	// Zero byte allocation must be non-NULL and Unique
 	i = new int[0];
 	int* i2 = new int[0];
-	// If this breakpoint triggers, you will fail Scenario 12
+	// If this breakpoint triggers, you will fail Scenario 0
 	if (i == i2)
 	{
-		std::cout << "If this triggers, you will fail Scenario 12" << std::endl;
+		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
 		DEBUG_BREAKPOINT();
 	}
 	delete[] i;
@@ -251,18 +261,19 @@ void project2_good()
 	try
 	{
 		// a 4GB (x86) or 1TB (x64) request is simply not serviceable
-		size_t s = (size_t)UNSERVICEABLE_VALUE;
+		size_t s = static_cast<size_t>(UNSERVICEABLE_VALUE);
 		char* c = new char[s];
+		UNUSED(s);
 		UNUSED(c);
 	}
-	catch (std::bad_alloc)
+	catch (std::bad_alloc&)
 	{
 		bad_alloc_caught = true;
 	}
-	// If this breakpoint triggers, you will fail Scenario 12
+	// If this breakpoint triggers, you will fail Scenario 0
 	if (!bad_alloc_caught)
 	{
-		std::cout << "If this triggers, you will fail Scenario 12" << std::endl;
+		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
 		DEBUG_BREAKPOINT();
 	}
 
@@ -277,25 +288,31 @@ void project2_good()
 		try
 		{
 			// a 4GB (x86) or 1TB (x64) request is simply not serviceable
-			size_t s = (size_t)UNSERVICEABLE_VALUE;
+			size_t s = static_cast<size_t>(UNSERVICEABLE_VALUE);
 			char* c = new (std::nothrow) char[s];
 			if (c != NULL)
 			{
-				std::cout << "If this triggers, you will fail Scenario 12" << std::endl;
+				std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
 				DEBUG_BREAKPOINT();
 			}
 		}
-		catch (std::bad_alloc)
+		catch (std::bad_alloc&)
 		{
 			bad_alloc_caught = true;
 		}
-		// If this breakpoint triggers, you will fail Scenario 12
+		// If this breakpoint triggers, you will fail Scenario 0
 		if (bad_alloc_caught)
 		{
-			std::cout << "If this triggers, you will fail Scenario 12" << std::endl;
+			std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
 			DEBUG_BREAKPOINT();
 		}
-	} // ENABLE_NOTHROW_TEST
+	}
 }
+
+#if defined (__clang__)
+
+#pragma clang diagnostic pop
+
+#endif
 
 // END: DO NOT MODIFY THE PREVIOUS 13 FUNCTIONS

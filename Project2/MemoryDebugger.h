@@ -1,17 +1,14 @@
 #pragma once
+
 #include <vector>
 
 #include "mallocator.h"
-#include <condition_variable>
-
-typedef void*  MemoryAddress;
-
 
 struct MemoryDebugger {
     MemoryDebugger();
-    ~MemoryDebugger() { DetectMemoryLeaks();}
+    ~MemoryDebugger() { DetectMemoryLeaks(); }
     struct Allocation {
-        Allocation() : array_allocation(false), line_number(-1), file(""), function("")/*, deallocated(false)*/ { }
+        Allocation() : array_allocation(false), line_number(-1) { }
         bool operator==(const Allocation& rhs) const {
             return memory_address == rhs.memory_address && return_address == rhs.return_address;
         }
@@ -19,14 +16,13 @@ struct MemoryDebugger {
             return memory_address == address;
         }
         //
-        bool array_allocation;
-        //bool deallocated;
-        MemoryAddress memory_address;
-        MemoryAddress return_address;
-        size_t allocation_size;
-        int line_number;
-		const char* file;
-		const char* function;
+        bool array_allocation = false;
+        MemoryAddress memory_address = nullptr;
+        MemoryAddress return_address = nullptr;
+        size_t allocation_size = 0;
+        int line_number = -1;
+        std::basic_string<char, std::char_traits<char>, Mallocator<char>> file;
+        std::basic_string<char, std::char_traits<char>, Mallocator<char>> function;
     };
     struct Deallocation {
         bool deallocated;
@@ -35,16 +31,16 @@ struct MemoryDebugger {
             return memory_address == address;
         }
     };
-    //
-    typedef std::vector<Allocation, Mallocator<Allocation*> > AllocationList;
-    typedef std::vector<Deallocation, Mallocator<Deallocation*> > DeallocationList;
+
+    typedef std::vector<Allocation, Mallocator<Allocation>> AllocationList;
+    typedef std::vector<Deallocation, Mallocator<Deallocation>> DeallocationList;
     AllocationList allocation_list;
     DeallocationList deallocation_list;
-    //
-	MemoryAddress Allocate(size_t, bool, MemoryAddress);
-	MemoryAddress Allocate(size_t, bool, MemoryAddress, const char * file, const char * function, int line);
+
+	MemoryAddress Allocate(size_t, bool, MemoryAddress, const char* file = "", const char* function = "", int line = -1);
     void Deallocate(MemoryAddress, bool);
-    //
+    void Deallocate(MemoryAddress, size_t, bool);
+
 private:
     bool DetectMemoryLeaks();
     bool DoubleDeletion(MemoryAddress);
@@ -53,8 +49,8 @@ private:
     bool ValidateDeletion(MemoryAddress, bool);
     void RemoveFromDeallocationList(MemoryAddress);
     void RemoveFromAllocationList(MemoryAddress);
-    //
-    int num_allocations,
-        num_deallocations;
-    size_t total_allocated_memory;
+
+    int num_allocations = 0;
+    int num_deallocations = 0;
+    size_t total_allocated_memory = 0;
 };
