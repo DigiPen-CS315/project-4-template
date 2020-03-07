@@ -2,6 +2,10 @@
 
 ## Compilers  
 - Cover which compilers your application targets
+    - [ ] gcc [version]  
+    - [ ] clang [version]  
+    - [ ] msvc/Visual Studio [version]  
+    
 
 ## Integration  
 - Cover how to integrate the memory debugger to a new project (replace this text)
