@@ -160,14 +160,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Memory.cpp" />
-    <ClCompile Include="MemoryDebugger.cpp" />
     <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mallocator.h" />
-    <ClInclude Include="Memory.h" />
-    <ClInclude Include="MemoryDebugger.h" />
     <ClInclude Include="Project2Helper.h" />
     <ClInclude Include="tests.h" />
   </ItemGroup>
