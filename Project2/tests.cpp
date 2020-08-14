@@ -1,7 +1,6 @@
-
-// Scenarios
-// BEGIN: DO NOT MODIFY THIS FILE
+// DO NOT MODIFY THIS FILE, IT WILL BE REPLACED WHEN GRADING
 /*****************************************************************************/
+// Scenarios
 
 #include <iostream>
 #include <cstring>
@@ -278,11 +277,6 @@ void project2_good()
 	}
 
 	// nothrow test
-	// To enable this test, return true from the ImplementedWithNoThrowNew() function in main
-	// You are NOT required to run this test
-	// Because it uses the placement new syntax, it will break #define new
-	// However, you should implement a conformant nothrow new regardless
-	if (ImplementedWithNoThrowNew())
 	{
 		bad_alloc_caught = false;
 		try
@@ -290,7 +284,7 @@ void project2_good()
 			// a 4GB (x86) or 1TB (x64) request is simply not serviceable
 			size_t s = static_cast<size_t>(UNSERVICEABLE_VALUE);
 			char* c = new (std::nothrow) char[s];
-			if (c != NULL)
+			if (c != nullptr)
 			{
 				std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
 				DEBUG_BREAKPOINT();
@@ -307,6 +301,7 @@ void project2_good()
 			DEBUG_BREAKPOINT();
 		}
 	}
+
 }
 
 #if defined (__clang__)
@@ -315,4 +310,4 @@ void project2_good()
 
 #endif
 
-// END: DO NOT MODIFY THE PREVIOUS 13 FUNCTIONS
+// DO NOT MODIFY THIS FILE, IT WILL BE REPLACED WHEN GRADING

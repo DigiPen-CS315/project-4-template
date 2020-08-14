@@ -12,6 +12,3 @@ void project2_readoverflow();
 void project2_writeoverflow();
 void project2_leaks();
 void project2_good();
-
-
-bool ImplementedWithNoThrowNew();

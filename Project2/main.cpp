@@ -5,24 +5,10 @@
 #include "tests.h"
 #include <cassert>
 
-#if defined NDEBUG
-// remove this if you want to try running in Release
-static_assert(false, "tests in Release are not required to pass. Remove this if you want to try running in Release");
-#endif
-
-// enables/disables the nothrow test
-// To enable this test, return true from the ImplementedWithNoThrowNew() function below
-// You are NOT required to run this test
-// However, you "should" implement a conformant nothrow new regardless
-bool ImplementedWithNoThrowNew()
-{
-	return false;
-}
-
 // Pass 0-11 to choose the scenario
 // IE: project2.exe 5
 int main(int argc, char *argv[])
-{	
+{
 	int scenario = 0; // Or change this line to pick a scenario
 
 	// Test Harness

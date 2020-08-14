@@ -19,7 +19,8 @@
 
 #define NO_THROW noexcept
 //throw specification is deprecated so this defines to nothing
-#define THROWS() 
+#define THROWS 
+
 // else - we are NOT compiling with MSVC/Windows
 #else
 
@@ -27,6 +28,7 @@
 #include <execinfo.h> // for backtrace (debug info)
 #include <csignal>    // for std::raise(SIGTRAP)
 
+// other maybe useful headers
 // #include <x86intrin.h>
 // #include <sys/types.h>
 // #include <sys/wait.h>
@@ -38,19 +40,19 @@
 #define BUILTIN_FILE() __builtin_FILE()
 #define BUILTIN_FUNCTION() __builtin_FUNCTION()
 #define BUILTIN_LINE() __builtin_LINE()
-#define DEBUG_BREAKPOINT() std::raise(SIGTRAP)
+#define DEBUG_BREAKPOINT() std::raise(SIGTRAP) // __builtin_trap() 
 
 // if we are compiling with clang
 #if defined (__clang__)
 
 #define NO_THROW _GLIBCXX_USE_NOEXCEPT
-#define THROWS() _GLIBCXX_USE_NOEXCEPT
+#define THROWS _GLIBCXX_USE_NOEXCEPT
 
 // else if we are compiling with gnu
 #elif defined (__GNUC__)
 
 #define NO_THROW _GLIBCXX_USE_NOEXCEPT
-#define THROWS() _GLIBCXX_THROW()
+#define THROWS _GLIBCXX_THROW()
 
 #endif
 
@@ -60,7 +62,5 @@
 #define STR(X) _STR(X)
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
-
-typedef void* MemoryAddress;
 
 #define GET_LINE_INFO() __FILE__ "(" STR(__LINE__) ")"
