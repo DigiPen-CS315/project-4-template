@@ -33,7 +33,7 @@ jobs:
     - name: Run CMake bat file
       shell: bash
 #      working-directory: ${{runner.workspace}}
-      run: ./RunCMake.bat
+      run: sudo ./RunCMake.bat
 #     - name: Create Build Environment
 #       # Equivalent of mkdir 
 #       run: cmake -E make_directory ${{runner.workspace}}/build
