@@ -32,6 +32,8 @@ jobs:
       with:
         ref: CMake
 
+    - name: ShowDirectory
+      run: ls
     - name: Run CMake bat file
       shell: bash
 #      working-directory: ${{runner.workspace}}
