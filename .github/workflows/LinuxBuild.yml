@@ -29,6 +29,8 @@ jobs:
     
       # Checkout the repository
     - uses: actions/checkout@v2
+      with:
+        ref: CMake
 
     - name: Run CMake bat file
       shell: bash
