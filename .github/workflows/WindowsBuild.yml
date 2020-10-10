@@ -20,7 +20,9 @@ jobs:
     
       # Checkout the repository
     - uses: actions/checkout@v2
-
+      with:
+        ref: TestSolution
+        
     - name: Create Build Environment
       # Equivalent of mkdir 
       run: cmake -E make_directory ${{runner.workspace}}/build
