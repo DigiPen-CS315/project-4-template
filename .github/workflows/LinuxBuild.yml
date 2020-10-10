@@ -1,0 +1,54 @@
+name: CMake_Linux_Clang
+
+on: [push]
+
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix
+    runs-on: ubuntu-latest
+
+    steps:
+      # Cache LLVM and Clang
+    - name: Cache LLVM and Clang
+      id: cache-llvm
+      uses: actions/cache@v2
+      with:
+        path: ~/.clang
+        key: llvm-10.0
+      # Install LLVM and Clang
+    - name: Install LLVM and Clang
+      uses: KyleMayes/install-llvm-action@v1
+      with:
+        version: "10.0"
+        directory: ~/.clang
+        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+    
+      # Checkout the repository
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      # Equivalent of mkdir 
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      # Use a bash shell so we can use the same syntax for environment variable
+      # access regardless of the host operating system
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      # Run CMAKE to generate make file
+      run: cmake $GITHUB_WORKSPACE 
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: cmake --build .
+
+    - name: Test
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: ./HeapDebugger echo "Testing project"
