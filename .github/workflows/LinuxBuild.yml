@@ -20,12 +20,12 @@ jobs:
         path: ~/.clang
         key: llvm-10.0
       # Install LLVM and Clang
-#     - name: Install LLVM and Clang
-#       uses: KyleMayes/install-llvm-action@v1
-#       with:
-#         version: "10.0"
-#         directory: ~/.clang
-#         cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+    - name: Install LLVM and Clang
+      uses: KyleMayes/install-llvm-action@v1
+      with:
+        version: "10.0"
+        directory: ~/.clang
+        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
     
       # Checkout the repository
     - uses: actions/checkout@v2
