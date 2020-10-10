@@ -2,8 +2,12 @@ name: CMake_Linux_Clang
 
 on: [push]
 
-
+strategy:
+  matrix:
+    compiler: [gcc, clang]
+    
 jobs:
+
   build:
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -42,10 +46,12 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{runner.workspace}}/build
+      env:
+        Compiler: ${{ matrix.compiler }}
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_CXX_COMPILER={Compiler}
 
     - name: Build
       shell: bash
