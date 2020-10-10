@@ -32,8 +32,6 @@ jobs:
       with:
         ref: CMake
 
-    - name: ShowDirectory
-      run: ls
     - name: Run CMake bat file
       shell: bash
 #      working-directory: ${{runner.workspace}}
@@ -51,7 +49,6 @@ jobs:
 #       run: cmake $GITHUB_WORKSPACE 
 
     - name: Build
-      working-directory: ${{runner.workspace}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build .
