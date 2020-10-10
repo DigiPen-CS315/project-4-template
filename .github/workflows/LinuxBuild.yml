@@ -30,20 +30,24 @@ jobs:
       # Checkout the repository
     - uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      # Equivalent of mkdir 
-      run: cmake -E make_directory ${{runner.workspace}}/build
-
-    - name: Configure CMake
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
+    - name: Run CMake bat file
       shell: bash
-      working-directory: ${{runner.workspace}}/build
-      # Run CMAKE to generate make file
-      run: cmake $GITHUB_WORKSPACE 
+      working-directory: ${{runner.workspace}}
+      run: ./RunCMake.bat
+#     - name: Create Build Environment
+#       # Equivalent of mkdir 
+#       run: cmake -E make_directory ${{runner.workspace}}/build
+
+#     - name: Configure CMake
+#       # Use a bash shell so we can use the same syntax for environment variable
+#       # access regardless of the host operating system
+#       shell: bash
+#       working-directory: ${{runner.workspace}}/build
+#       # Run CMAKE to generate make file
+#       run: cmake $GITHUB_WORKSPACE 
 
     - name: Build
-      working-directory: ${{runner.workspace}}/build
+      working-directory: ${{runner.workspace}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build .
