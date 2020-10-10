@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [gcc, clang]
+        compiler: [g++, clang++]
     steps:
       # Cache LLVM and Clang
     - name: Cache LLVM and Clang
