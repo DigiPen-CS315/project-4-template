@@ -11,7 +11,11 @@
 
 static const size_t PAGE_SIZE = 4096;
 
-MemoryDebugger debugger;
+MemoryDebugger& GetMemDebugger()
+{
+	static MemoryDebugger debugger;
+	return debugger;
+}
 
 
 static void SymbolsInit() {
@@ -114,7 +118,7 @@ void* MemoryDebugger::Allocate(size_t size, bool isArray, void* returAddress) {
 	allocation.info = getTraceInfo(2); // back 2 calls
 	allocation.dataPointer = (unsigned char*)p + ((numberOfPages - 1) * PAGE_SIZE - size);
 
-	debugger.allocations.push_back(allocation);
+	GetMemDebugger().allocations.push_back(allocation);
 
 	return allocation.dataPointer;
 }
@@ -129,7 +133,7 @@ bool MemoryDebugger::Dellocate(void* address, bool isArray, size_t size /* = 0 *
 	// or look up in the map using map.find
 
 	std::vector<Allocation, Mallocator<Allocation>>::iterator allocation = std::find(allocations.begin(), allocations.end(), address);
-	if (allocation == debugger.allocations.end()) {
+	if (allocation == GetMemDebugger().allocations.end()) {
 		// were deleting an address doesn't exist in our set (wasn't allocated with new???)
 		DEBUG_ERROR("Deleting an address not allocated by us");
 		return false;
@@ -151,7 +155,7 @@ bool MemoryDebugger::Dellocate(void* address, bool isArray, size_t size /* = 0 *
 #if 1
 
 void* operator new(size_t size) THROWS {
-	void* ptr = debugger.Allocate(size, false, GET_RETURN_ADDR());
+	void* ptr = GetMemDebugger().Allocate(size, false, GET_RETURN_ADDR());
 	if (ptr == nullptr) {
 		throw std::bad_alloc();
 	}
@@ -159,7 +163,7 @@ void* operator new(size_t size) THROWS {
 }
 
 void* operator new[](size_t size) THROWS{
-	void* ptr = debugger.Allocate(size, true, GET_RETURN_ADDR());
+	void* ptr = GetMemDebugger().Allocate(size, true, GET_RETURN_ADDR());
 	if (ptr == nullptr) {
 		throw std::bad_alloc();
 	}
@@ -167,62 +171,62 @@ void* operator new[](size_t size) THROWS{
 }
 
 void* operator new(size_t size, const std::nothrow_t&) NO_THROW {
-	return debugger.Allocate(size, false, GET_RETURN_ADDR());
+	return GetMemDebugger().Allocate(size, false, GET_RETURN_ADDR());
 }
 
 void* operator new[](size_t size, const std::nothrow_t&) NO_THROW {
-	return debugger.Allocate(size, true, GET_RETURN_ADDR());
+	return GetMemDebugger().Allocate(size, true, GET_RETURN_ADDR());
 }
 
 
 //void operator delete(void* address) THROWS {
-//	debugger.Dellocate(address, false);
+//	GetMemDebugger().Dellocate(address, false);
 //}
 //
 //void operator delete[](void* address) THROWS {
-//	debugger.Dellocate(address, true);
+//	GetMemDebugger().Dellocate(address, true);
 //}
 
 //void operator delete(void* address, size_t size) THROWS {
-//	debugger.Dellocate(address, false, size);
+//	GetMemDebugger().Dellocate(address, false, size);
 //}
 //
 //void operator delete[](void* address, size_t size) THROWS {
-//	debugger.Dellocate(address, true, size);
+//	GetMemDebugger().Dellocate(address, true, size);
 //}
 //
 //void operator delete(void* address, const std::nothrow_t&) THROWS {
-//	debugger.Dellocate(address, false);
+//	GetMemDebugger().Dellocate(address, false);
 //}
 //
 //void operator delete[](void* address, const std::nothrow_t&) THROWS {
-//	debugger.Dellocate(address, true);
+//	GetMemDebugger().Dellocate(address, true);
 //}
 
 
 
 void operator delete(void* address) NO_THROW {
-	debugger.Dellocate(address, false);
+	GetMemDebugger().Dellocate(address, false);
 }
 
 void operator delete[](void* address) NO_THROW {
-	debugger.Dellocate(address, true);
+	GetMemDebugger().Dellocate(address, true);
 }
 
 void operator delete(void* address, size_t size) NO_THROW {
-	debugger.Dellocate(address, false, size);
+	GetMemDebugger().Dellocate(address, false, size);
 }
 
 void operator delete[](void* address, size_t size) NO_THROW{
-	debugger.Dellocate(address, true, size);
+	GetMemDebugger().Dellocate(address, true, size);
 }
 
 void operator delete(void* address, const std::nothrow_t&) NO_THROW {
-	debugger.Dellocate(address, false);
+	GetMemDebugger().Dellocate(address, false);
 }
 
 void operator delete[](void* address, const std::nothrow_t&) NO_THROW{
-	debugger.Dellocate(address, true);
+	GetMemDebugger().Dellocate(address, true);
 }
 
 #endif

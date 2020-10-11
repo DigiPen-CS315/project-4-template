@@ -11,15 +11,16 @@
 
 #pragma intrinsic(_ReturnAddress)
 
-#define BUILTIN_RETURN_ADDR(...) _ReturnAddress()
-#define BUILTIN_FILE() __FILE__
-#define BUILTIN_FUNCTION() __FUNC__
-#define BUILTIN_LINE() __LINE__
+#define GET_RETURN_ADDR(...) _ReturnAddress()
+#define GET_FILE_INFO() __FILE__
+#define GET_FUNCTION_INFO() __FUNCTION__
+#define GET_LINE_INFO() __LINE__
+
 #define DEBUG_BREAKPOINT() __debugbreak()
 
 #define NO_THROW noexcept
-//throw specification is deprecated so this defines to nothing
 #define THROWS 
+
 
 // else - we are NOT compiling with MSVC/Windows
 #else
@@ -36,17 +37,18 @@
 // #include <unistd.h>
 
 //pass the depth you want to return
-#define BUILTIN_RETURN_ADDR(...) __builtin_return_address(__VA_ARGS__)
-#define BUILTIN_FILE() __builtin_FILE()
-#define BUILTIN_FUNCTION() __builtin_FUNCTION()
-#define BUILTIN_LINE() __builtin_LINE()
+#define GET_RETURN_ADDR() __builtin_return_address(0)
+#define GET_FILE_INFO() __builtin_FILE()
+#define GET_FUNCTION_INFO() __builtin_FUNCTION()
+#define GET_LINE_INFO() __builtin_LINE()
+
 #define DEBUG_BREAKPOINT() std::raise(SIGTRAP) // __builtin_trap() 
 
 // if we are compiling with clang
 #if defined (__clang__)
 
 #define NO_THROW _GLIBCXX_USE_NOEXCEPT
-#define THROWS _GLIBCXX_USE_NOEXCEPT
+#define THROWS  //_GLIBCXX_THROW() // _GLIBCXX_USE_NOEXCEPT
 
 // else if we are compiling with gnu
 #elif defined (__GNUC__)
@@ -63,4 +65,7 @@
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
-#define GET_LINE_INFO() __FILE__ "(" STR(__LINE__) ")"
+#define GET_FILE_LINE_INFO() __FILE__ "(" STR(__LINE__) ")"
+
+#define DEBUG_ERROR(MSG) \
+	do { printf("Error: %s\n\t%s(%d)\n", MSG, __FILE__, __LINE__); DEBUG_BREAKPOINT(); } while(0) 	
