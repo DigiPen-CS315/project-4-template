@@ -39,7 +39,7 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build .
 
-    - name: Test
-      working-directory: ${{runner.workspace}}/build
-      shell: bash
-      run: ./HeapDebugger echo "Testing project"
+#     - name: Test
+#       working-directory: ${{runner.workspace}}/build
+#       shell: bash
+#       run: ./HeapDebugger echo "Testing project"
