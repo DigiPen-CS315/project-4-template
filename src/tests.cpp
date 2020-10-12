@@ -24,10 +24,6 @@
 #define UNSERVICEABLE_VALUE 0xF0000000
 #endif
 
-#define FAILED_TEST() \
-	std::cout << "Failed Test: " << GET_FUNCTION_INFO() << " in " << GET_FILE_LINE_INFO() << std::endl; \
-	DEBUG_BREAKPOINT();
-
 /* Memory Leaks */
 // DO NOT MODIFY
 double* project2_leaks_helper()
@@ -55,7 +51,6 @@ void project2_leaks()
 	{
 		ints[i] = new int[i + 1];
 	}
-
 	for (int i = 0; i < 9; i++)
 	{
 		delete[] ints[i];
@@ -88,9 +83,9 @@ void project2_writeoverflow()
 		ints[i] = ints[i - 1];
 	}
 
-	FAILED_TEST();
-
 	delete[] ints;
+	std::cout << "If this triggers, you will fail Scenario 'Write Overflow'. " << GET_LINE_INFO() << std::endl;
+	DEBUG_BREAKPOINT();
 }
 
 // DO NOT MODIFY
@@ -109,9 +104,9 @@ void project2_readoverflow()
 		std::cout << "ints " << i << " is " << ints[i] << std::endl;
 	}
 
-	FAILED_TEST();
-
 	delete[] ints;
+	std::cout << "If this triggers, you will fail Scenario 'Read Overflow'. " << GET_LINE_INFO() << std::endl;
+	DEBUG_BREAKPOINT();
 }
 
 /*****************************************************************************/
@@ -126,8 +121,6 @@ void project2_deletedmemorywrite()
 
 	// Write Access to Deleted Pointer
 	*i = 43;
-
-	FAILED_TEST();
 }
 
 // DO NOT MODIFY
@@ -139,8 +132,6 @@ void project2_deletedmemoryread()
 
 	// Read Access to Deleted Pointer
 	std::cout << "Deleted i is: " << *i << std::endl;
-
-	FAILED_TEST();
 }
 
 /*****************************************************************************/
@@ -154,8 +145,6 @@ void project2_doubledelete()
 
 	// Double Delete
 	delete i;
-
-	FAILED_TEST();
 }
 
 // DO NOT MODIFY
@@ -166,8 +155,6 @@ void project2_doublevectordelete()
 
 	// Double Delete
 	delete[] i;
-
-	FAILED_TEST();
 }
 
 /*****************************************************************************/
@@ -180,8 +167,6 @@ void project2_vectornew_scalardelete()
 
 	// Mismatched new[]/delete
 	delete ints;
-
-	FAILED_TEST();
 }
 
 // DO NOT MODIFY
@@ -191,8 +176,6 @@ void project2_scalarnew_vectordelete()
 
 	// Mismatched new/delete[]
 	delete[] ints;
-
-	FAILED_TEST();
 }
 
 /*****************************************************************************/
@@ -206,8 +189,6 @@ void project2_randompointer1()
 
 	// Cannot delete a stack variable
 	delete i;
-
-	FAILED_TEST();
 }
 
 // DO NOT MODIFY
@@ -223,8 +204,6 @@ void project2_randompointer2()
 
 	// Cannot delete a pointer that was not returned from new
 	delete bad_i;
-
-	FAILED_TEST();
 }
 
 /*****************************************************************************/
@@ -270,7 +249,8 @@ void project2_good()
 	// If this breakpoint triggers, you will fail Scenario 0
 	if (i == i2)
 	{
-		FAILED_TEST();
+		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
+		DEBUG_BREAKPOINT();
 	}
 	delete[] i;
 	delete[] i2;
@@ -292,7 +272,8 @@ void project2_good()
 	// If this breakpoint triggers, you will fail Scenario 0
 	if (!bad_alloc_caught)
 	{
-		FAILED_TEST();
+		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
+		DEBUG_BREAKPOINT();
 	}
 
 	// nothrow test
@@ -305,7 +286,8 @@ void project2_good()
 			char* c = new (std::nothrow) char[s];
 			if (c != nullptr)
 			{
-				FAILED_TEST();
+				std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
+				DEBUG_BREAKPOINT();
 			}
 		}
 		catch (std::bad_alloc&)
@@ -315,26 +297,11 @@ void project2_good()
 		// If this breakpoint triggers, you will fail Scenario 0
 		if (bad_alloc_caught)
 		{
-			FAILED_TEST();
+			std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
+			DEBUG_BREAKPOINT();
 		}
 	}
-}
 
-void runTest(int scenario) {
-	switch (scenario) {
-		case 11: project2_vectornew_scalardelete(); break;
-		case 10: project2_scalarnew_vectordelete(); break;
-		case 9:  project2_randompointer1(); break;
-		case 8:  project2_randompointer2(); break;
-		case 7:  project2_doubledelete(); break;
-		case 6:  project2_doublevectordelete(); break;
-		case 5:  project2_deletedmemoryread(); break;
-		case 4:  project2_deletedmemorywrite(); break;
-		case 3:  project2_readoverflow(); break;
-		case 2:  project2_writeoverflow(); break;
-		case 1:  project2_leaks(); break;
-		default: project2_good(); break;
-	}
 }
 
 #if defined (__clang__)

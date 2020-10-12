@@ -37,10 +37,10 @@ add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"                           
 # later. Otherwise we have to add them here ourselves.                                  ##
 if (CMAKE_VERSION VERSION_LESS 2.8.11)                                                  ##
   include_directories("${gtest_SOURCE_DIR}/include")                                    ##
-endif()
-
-include(GoogleTest)
-enable_testing()
+endif()                                                                                 ##
+                                                                                        ##
+include(GoogleTest)                                                                     ##
+enable_testing()                                                                        ##
                                                                                         ##
 endif()                                                                                 ##
 #                                                                                       ##
@@ -61,28 +61,28 @@ add_executable(HeapDebugger ${SRCFILES})
 
 ##########################################################################################
 # DO NOT MODIFY                                                                         ##
-if(ENABLE_GTEST)
-FILE(GLOB TESTFILES "${CMAKE_SOURCE_DIR}/test/*.h" "${CMAKE_SOURCE_DIR}/test/*.cpp")
-message("Test files are ${TESTFILES}")
-
-# this is the file I want to exclude / remove from the list
-get_filename_component(full_path_test_cpp ${CMAKE_SOURCE_DIR}/src/main.cpp ABSOLUTE)
-# Now I remove the main.cpp so that there are not two conflicting mains.
-list(REMOVE_ITEM SRCFILES "${full_path_test_cpp}")
-# Create a project with all the source files except main, including the test files.
-add_executable(run_unit_test ${TESTFILES} ${SRCFILES})
-# Link GTest library against it
-target_link_libraries(run_unit_test gtest_main)
-# Standard linking to gtest stuff.
-target_include_directories(run_unit_test PRIVATE  "${CMAKE_SOURCE_DIR}/src")
-# Extra linking for the project.
+if(ENABLE_GTEST)                                                                        ##
+FILE(GLOB TESTFILES "${CMAKE_SOURCE_DIR}/test/*.h" "${CMAKE_SOURCE_DIR}/test/*.cpp")    ##
+message("Test files are ${TESTFILES}")                                                  ##
+                                                                                        ##
+# this is the file I want to exclude / remove from the list                             ##
+get_filename_component(full_path_test_cpp ${CMAKE_SOURCE_DIR}/src/main.cpp ABSOLUTE)    ##
+# Now I remove the main.cpp so that there are not two conflicting mains.                ##
+list(REMOVE_ITEM SRCFILES "${full_path_test_cpp}")                                      ##
+# Create a project with all the source files except main, including the test files.     ##
+add_executable(run_unit_test ${TESTFILES} ${SRCFILES})                                  ##
+# Link GTest library against it                                                         ##
+target_link_libraries(run_unit_test gtest_main)                                         ##
+# Standard linking to gtest stuff.                                                      ##
+target_include_directories(run_unit_test PRIVATE  "${CMAKE_SOURCE_DIR}/src")            ##
+# Extra linking for the project.                                                        ##
 message("Linking gtest")                                                                ##
-
-macro (create_test target)
-  add_test (NAME ${target} COMMAND $<TARGET_FILE:${target}>)
-endmacro (create_test)
-
-create_test(run_unit_test)                                                     ##
+                                                                                        ##
+macro (create_test target)                                                              ##
+  add_test (NAME ${target} COMMAND $<TARGET_FILE:${target}>)                            ##
+endmacro (create_test)                                                                  ##
+                                                                                        ##
+create_test(run_unit_test)                                                              ##
 #add_test(NAME example_test COMMAND example)                                            ##
 endif()                                                                                 ##
 ##########################################################################################

@@ -20,8 +20,6 @@ jobs:
     
       # Checkout the repository
     - uses: actions/checkout@v2
-      with:
-        ref: CMake
         
     - name: Create Build Environment
       # Equivalent of mkdir 
