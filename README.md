@@ -125,7 +125,7 @@ Each function would probably look something like this
 ```c++
 void* operator new(size_t size)
 {
-    MemoryAddress memory = VittualAlloc(...);
+    MemoryAddress memory = VirtualAlloc(...);
     // Debugger goes here to record information
     return memory;
 }
