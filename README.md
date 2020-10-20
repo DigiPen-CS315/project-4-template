@@ -27,7 +27,7 @@
 By Roland Shum
 
 ## Document Goal:
-The purpose of this document is to help struggling students gain a foothold on how to start this project. This document will show you how to get started
+The purpose of this document is to help students gain a foothold on how to start this project. This document will show you how to get started
 using the non-macro method of **overloading** new()/delete().
 
 
@@ -113,11 +113,11 @@ void* operator new(size_t size);
 void* operator new(size_t size, const std::nothrow_t&) noexcept;
 void* operator new[](size_t size);
 void* operator new[](size_t size, const std::nothrow_t&) noexcept;
-void operator delete(void* address);
-void operator delete(void* address, size_t size); 
+void operator delete(void* address) noexcept;
+void operator delete(void* address, size_t size) noexcept; 
 void operator delete(void* address, const std::nothrow_t&) noexcept;
-void operator delete[](void* address);
-void operator delete[](void* address, size_t size);
+void operator delete[](void* address) noexcept;
+void operator delete[](void* address, size_t size) noexcept;
 void operator delete[](void* address, const std::nothrow_t&) noexcept;
 ```
 You will have to overload each of these. Remember to make your code cross-compile in GCC and Clang!
@@ -125,7 +125,7 @@ Each function would probably look something like this
 ```c++
 void* operator new(size_t size)
 {
-    MemoryAddress memory = malloc(size);
+    MemoryAddress memory = VittualAlloc(...);
     // Debugger goes here to record information
     return memory;
 }
