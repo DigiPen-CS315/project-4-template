@@ -1,19 +1,11 @@
 param (
-    [string]$configuration = "Debug", 
-    [string]$platform = "x64"
+    [string]$buildDir = "build-msvc", 
+    [string]$config = "Debug"
 )
 
-if ($platform -eq "x64") {
-    $platform = "x64/"
-}
-else {
-    $platform = ""
-}
-
-$exePath = "$platform$configuration"
-Write-Host $exePath
+$exePath = "$buildDir/$config"
 
 for ($i=0; $i -le 11; $i++) {
-    Write-Host $exePath/project2.exe $i
-    & ./$exePath/project2.exe $i
+    Write-Host $exePath/HeapDebugger.exe $i
+    & ./$exePath/HeapDebugger.exe $i
 }

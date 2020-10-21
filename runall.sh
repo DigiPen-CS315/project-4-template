@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/evn bash
+
 for i in `seq 0 11`;
 do
-    echo $1 $i
-    ./$1 $i
+    echo "./build-unix/HeapDebugger $i"
+    ./build-unix/HeapDebugger $i
 done

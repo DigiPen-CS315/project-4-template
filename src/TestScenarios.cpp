@@ -1,13 +1,13 @@
-// DO NOT MODIFY THIS FILE, IT WILL BE REPLACED WHEN GRADING
-/*****************************************************************************/
+// DO NOT PLACE REQUIRED MODIFICATIONS IN THIS FILE, IT WILL BE REPLACED WHEN GRADING
+/***********************************************************************************/
 // Scenarios
 
 #include <iostream>
 #include <cstring>
 #include <new>
 
-#include "tests.h"
-#include "Project2Helper.h"
+#include "Common.h"
+#include "TestScenarios.h"
 
 #if defined (__clang__)
 
@@ -24,14 +24,23 @@
 #define UNSERVICEABLE_VALUE 0xF0000000
 #endif
 
+#if DEBUG
+#define FAILED_TEST() \
+	std::cout << "Failed Test: " << GET_FUNCTION_INFO() << " in " << GET_FILE_LINE_INFO() << std::endl; \
+	DEBUG_BREAKPOINT();
+#else
+#define FAILED_TEST() \
+	std::cout << "Test End: " << GET_FUNCTION_INFO() << " in " << GET_FILE_LINE_INFO() << std::endl;
+#endif
+
+
+/*****************************************************************************/
 /* Memory Leaks */
-// DO NOT MODIFY
 double* project2_leaks_helper()
 {
 	return new double;
 }
 
-// DO NOT MODIFY
 void project2_leaks()
 {
 	int* ints[10] = { nullptr };
@@ -51,6 +60,7 @@ void project2_leaks()
 	{
 		ints[i] = new int[i + 1];
 	}
+
 	for (int i = 0; i < 9; i++)
 	{
 		delete[] ints[i];
@@ -67,7 +77,6 @@ void project2_leaks()
 /*****************************************************************************/
 /* Overflows */
 
-// DO NOT MODIFY
 void project2_writeoverflow()
 {
 	int* ints = new int[10];
@@ -83,12 +92,11 @@ void project2_writeoverflow()
 		ints[i] = ints[i - 1];
 	}
 
+	FAILED_TEST();
+
 	delete[] ints;
-	std::cout << "If this triggers, you will fail Scenario 'Write Overflow'. " << GET_LINE_INFO() << std::endl;
-	DEBUG_BREAKPOINT();
 }
 
-// DO NOT MODIFY
 void project2_readoverflow()
 {
 	int* ints = new int[10];
@@ -104,15 +112,14 @@ void project2_readoverflow()
 		std::cout << "ints " << i << " is " << ints[i] << std::endl;
 	}
 
+	FAILED_TEST();
+
 	delete[] ints;
-	std::cout << "If this triggers, you will fail Scenario 'Read Overflow'. " << GET_LINE_INFO() << std::endl;
-	DEBUG_BREAKPOINT();
 }
 
 /*****************************************************************************/
 /* Deleted Memory Access */
 
-// DO NOT MODIFY
 void project2_deletedmemorywrite()
 {
 	int* i = new int;
@@ -121,9 +128,10 @@ void project2_deletedmemorywrite()
 
 	// Write Access to Deleted Pointer
 	*i = 43;
+
+	FAILED_TEST();
 }
 
-// DO NOT MODIFY
 void project2_deletedmemoryread()
 {
 	int* i = new int;
@@ -132,12 +140,13 @@ void project2_deletedmemoryread()
 
 	// Read Access to Deleted Pointer
 	std::cout << "Deleted i is: " << *i << std::endl;
+
+	FAILED_TEST();
 }
 
 /*****************************************************************************/
 /* Double Delete */
 
-// DO NOT MODIFY
 void project2_doubledelete()
 {
 	int* i = new int;
@@ -145,9 +154,10 @@ void project2_doubledelete()
 
 	// Double Delete
 	delete i;
+
+	FAILED_TEST();
 }
 
-// DO NOT MODIFY
 void project2_doublevectordelete()
 {
 	int* i = new int[2];
@@ -155,33 +165,36 @@ void project2_doublevectordelete()
 
 	// Double Delete
 	delete[] i;
+
+	FAILED_TEST();
 }
 
 /*****************************************************************************/
 /* Mismatched new/delete[] and new[]/delete */
 
-// DO NOT MODIFY
 void project2_vectornew_scalardelete()
 {
 	int* ints = new int[2];
 
 	// Mismatched new[]/delete
 	delete ints;
+
+	FAILED_TEST();
 }
 
-// DO NOT MODIFY
 void project2_scalarnew_vectordelete()
 {
 	int* ints = new int;
 
 	// Mismatched new/delete[]
 	delete[] ints;
+
+	FAILED_TEST();
 }
 
 /*****************************************************************************/
 /* Random Pointer Delete */
 
-// DO NOT MODIFY
 void project2_randompointer1()
 {
 	int local_int = 0;
@@ -189,9 +202,10 @@ void project2_randompointer1()
 
 	// Cannot delete a stack variable
 	delete i;
+
+	FAILED_TEST();
 }
 
-// DO NOT MODIFY
 void project2_randompointer2()
 {
 	int* i = new int;
@@ -204,12 +218,13 @@ void project2_randompointer2()
 
 	// Cannot delete a pointer that was not returned from new
 	delete bad_i;
+
+	FAILED_TEST();
 }
 
 /*****************************************************************************/
 /* GOOD Usage - There is nothing wrong with this test */
 
-// DO NOT MODIFY
 void project2_good()
 {
 	// Simple Allocation Test
@@ -249,8 +264,7 @@ void project2_good()
 	// If this breakpoint triggers, you will fail Scenario 0
 	if (i == i2)
 	{
-		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
-		DEBUG_BREAKPOINT();
+		FAILED_TEST();
 	}
 	delete[] i;
 	delete[] i2;
@@ -272,8 +286,7 @@ void project2_good()
 	// If this breakpoint triggers, you will fail Scenario 0
 	if (!bad_alloc_caught)
 	{
-		std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
-		DEBUG_BREAKPOINT();
+		FAILED_TEST();
 	}
 
 	// nothrow test
@@ -286,8 +299,7 @@ void project2_good()
 			char* c = new (std::nothrow) char[s];
 			if (c != nullptr)
 			{
-				std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
-				DEBUG_BREAKPOINT();
+				FAILED_TEST();
 			}
 		}
 		catch (std::bad_alloc&)
@@ -297,11 +309,9 @@ void project2_good()
 		// If this breakpoint triggers, you will fail Scenario 0
 		if (bad_alloc_caught)
 		{
-			std::cout << "If this triggers, you will fail Scenario 'Good'. " << GET_LINE_INFO() << std::endl;
-			DEBUG_BREAKPOINT();
+			FAILED_TEST();
 		}
 	}
-
 }
 
 #if defined (__clang__)
@@ -310,4 +320,5 @@ void project2_good()
 
 #endif
 
-// DO NOT MODIFY THIS FILE, IT WILL BE REPLACED WHEN GRADING
+/***********************************************************************************/
+// DO NOT PLACE REQUIRED MODIFICATIONS IN THIS FILE, IT WILL BE REPLACED WHEN GRADING
