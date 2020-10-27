@@ -1,12 +1,10 @@
-## Description 
-[Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.]
+## Description  <!-- Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->
 
 ### Type of change
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Bug fix (non-breaking change which fixes an issue)
 
-## How Has This Been Tested?  
-Please describe the tests that you completed to verify your changes. (How do you know your changes work correctly?)
+## How Has This Been Tested?  <!-- Please describe the tests that you completed to verify your changes. (How do you know your changes work correctly?) -->
 
 #### Tested Compilers:
 - [ ] MSVC 32-bit
