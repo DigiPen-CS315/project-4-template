@@ -17,9 +17,11 @@ Please describe the tests that you completed to verify your changes. (How do you
 #### Tested Configuration:
 - [ ] Debug
 - [ ] Release
+- [ ] RelWithDebInfo
+- [ ] MinSizeRel
 
 #### Tested Scenarios:
-- [ ] For each of the 12 scenarios, my memory debugger detects appropriate issues and passes all tests.
+- [ ] For each of the 12 scenarios, my memory debugger detects appropriate issues and passes all tests. If not, describe the issues you had.
 
 ## Checklist:
 - [ ] I have performed a self-review of my own code
