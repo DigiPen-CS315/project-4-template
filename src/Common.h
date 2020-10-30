@@ -18,7 +18,7 @@ typedef std::basic_string<char, std::char_traits<char>, Mallocator<char>> Basic_
 #include <intrin.h>  // for _ReturnAddress()
 #pragma intrinsic(_ReturnAddress)
 
-#define GET_RETURN_ADDR() _ReturnAddress(0)
+#define GET_RETURN_ADDR() _ReturnAddress()
 #define GET_FILE_INFO() __FILE__
 #define GET_FUNCTION_INFO() __FUNCTION__
 #define GET_LINE_INFO() __LINE__
