@@ -1,0 +1,30 @@
+[
+    {
+        "name": "clang 10",
+        "compilers": {
+            "CC" : "/usr/bin/clang-10",
+            "CXX" : "/usr/bin/clang++-10"
+        }
+    },
+    {
+        "name": "clang",
+        "compilers": {
+            "CC" : "/usr/bin/clang",
+            "CXX" : "/usr/bin/clang++"
+        }
+    },
+    {
+        "name": "gcc 9",
+        "compilers": {
+            "CC" : "/usr/bin/gcc-9",
+            "CXX" : "/usr/bin/g++-9"
+        }
+    },
+    {
+        "name": "gcc",
+        "compilers": {
+            "CC" : "/usr/bin/gcc",
+            "CXX" : "/usr/bin/g++"
+        }
+    }
+]
