@@ -1,4 +1,4 @@
-#!/bin/evn bash
+#!/bin/env bash
 
 for i in `seq 0 11`;
 do
