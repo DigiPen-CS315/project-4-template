@@ -39,9 +39,16 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build .
+      run: cmake --build . --config Debug
 
-#     - name: Test
-#       working-directory: ${{runner.workspace}}/build
-#       shell: bash
-#       run: ./HeapDebugger echo "Testing project"
+    - name: Test 0
+      working-directory: ${{runner.workspace}}/build
+      run: ./HeapDebugger |
+          if (Test-Path DebugLog.csv) {
+            cat DebugLog.csv 
+          }
+
+    - name: Test 1
+      working-directory: ${{runner.workspace}}/build
+      run: ./HeapDebugger 1 |          
+          cat DebugLog.csv
