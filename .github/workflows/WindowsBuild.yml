@@ -43,12 +43,12 @@ jobs:
 
     - name: Test 0
       working-directory: ${{runner.workspace}}/build
-      run: ./HeapDebugger |
+      run: ./Debug/HeapDebugger |
           if (Test-Path DebugLog.csv) {
             cat DebugLog.csv 
           }
 
     - name: Test 1
       working-directory: ${{runner.workspace}}/build
-      run: ./HeapDebugger 1 |          
+      run: ./Debug/HeapDebugger 1 |          
           cat DebugLog.csv
