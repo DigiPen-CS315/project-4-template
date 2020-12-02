@@ -44,7 +44,7 @@ jobs:
     - name: Test 0
       working-directory: ${{runner.workspace}}/build
       shell: powershell
-      run: ./Debug/HeapDebugger |
+      run: ./Debug/HeapDebugger 0 ;
           if (Test-Path DebugLog.csv) {
             cat DebugLog.csv 
           }
@@ -52,5 +52,5 @@ jobs:
     - name: Test 1
       working-directory: ${{runner.workspace}}/build
       shell: powershell
-      run: ./Debug/HeapDebugger 1 |          
+      run: ./Debug/HeapDebugger 1 ;       
           cat DebugLog.csv
