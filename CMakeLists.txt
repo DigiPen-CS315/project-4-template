@@ -63,33 +63,48 @@ if(CMAKE_BUILD_TYPE MATCHES Deb)
   set(DEBUG_FLAGS "${DEBUG_FLAGS} -g")
   if(CMAKE_COMPILER_IS_GNUCXX)
     set(DEBUG_FLAGS "${DEBUG_FLAGS} -rdynamic")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}") 
   endif()
   if(CMAKE_COMPILER_IS_CLANGXX)
-    set(DEBUG_FLAGS "${DEBUG_FLAGS} -fshow-source-location -Wl,--export-dynamic")
+    set(DEBUG_FLAGS "${DEBUG_FLAGS} -fshow-source-location ")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-export_dynamic") 
   endif()
 endif()
 
-file(WRITE "flags.cmake" "")
+
+# Create a subdirectory for each build configuration when building using
+# makefiles.  This makes it possible to keep multiple build artifacts
+set(OUTPUT_SUBDIR "")
+if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
+  if(CMAKE_BUILD_TYPE STREQUAL "")
+    set(OUTPUT_SUBDIR "Release/")
+  else()
+    set(OUTPUT_SUBDIR "${CMAKE_BUILD_TYPE}/")
+  endif()
+endif()
+
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/flags.cmake" "")
 foreach(FLAGS_TYPE C CXX)
   # Enable debug code when CMAKE_BUILD_TYPE=Debug.
   set(FLAGS_VARIABLE CMAKE_${FLAGS_TYPE}_FLAGS_DEBUG)
-  file(APPEND "flags.cmake"
+  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/flags.cmake"
        "set(${FLAGS_VARIABLE} \"\${${FLAGS_VARIABLE}} ${DEBUG_FLAGS}\")\n")
        # Disable debug code when CMAKE_BUILD_TYPE is a release config. 
   foreach(BUILD_TYPE_SUFFIX RELEASE RELWITHDEBINFO MINSIZEREL)
     set(FLAGS_VARIABLE CMAKE_${FLAGS_TYPE}_FLAGS_${BUILD_TYPE_SUFFIX})
-    file(APPEND "flags.cmake"
+    file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/flags.cmake"
          "set(${FLAGS_VARIABLE} \"\${${FLAGS_VARIABLE}} ${RELEASE_FLAGS}\")\n")
   endforeach(BUILD_TYPE_SUFFIX)
   # If no build configuration is specified, default to release flags to align
   # with cmake's default build configuration for makefiles.
   if(NOT CMAKE_BUILD_TYPE AND UNIX AND NOT APPLE)
     set(FLAGS_VARIABLE CMAKE_${FLAGS_TYPE}_FLAGS)
-    file(APPEND "flags.cmake"
+    file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/flags.cmake"
          "set(${FLAGS_VARIABLE} \"\${${FLAGS_VARIABLE}} ${RELEASE_FLAGS}\")\n")
   endif(NOT CMAKE_BUILD_TYPE AND UNIX AND NOT APPLE)
 endforeach(FLAGS_TYPE)
-include("flags.cmake")
+include("${CMAKE_CURRENT_BINARY_DIR}/flags.cmake")
 
 # Set warning levels
 set(C_FLAGS_WARNINGS "")
@@ -108,17 +123,6 @@ if(CMAKE_COMPILER_IS_CLANGXX)
     set_target_properties(${target} PROPERTIES XCODE_ATTRIBUTE_WARNING_CFLAGS
                           "${C_FLAGS_WARNINGS}")
   endforeach(target)
-endif()
-
-# Create a subdirectory for each build configuration when building using
-# makefiles.  This makes it possible to keep multiple build artifacts
-set(OUTPUT_SUBDIR "")
-if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
-  if(CMAKE_BUILD_TYPE STREQUAL "")
-    set(OUTPUT_SUBDIR "Release/")
-  else()
-    set(OUTPUT_SUBDIR "${CMAKE_BUILD_TYPE}/")
-  endif()
 endif()
 
 if (UNIX)
@@ -161,6 +165,7 @@ add_executable(HeapDebugger ${SRCFILES} ${TARGET_SRCFILES})
 
 # set VS startup project
 if(MSVC)
+  target_link_libraries(HeapDebugger dbghelp)
   set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT HeapDebugger)
 endif(MSVC)
 
