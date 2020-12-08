@@ -17,11 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [g++, clang++]
-    steps:
-    - name: ls
-      run: ls |
-           pwd
-      
+    steps:    
       # Cache LLVM and Clang
     - name: Cache LLVM and Clang
       id: cache-llvm
