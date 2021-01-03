@@ -1,0 +1,24 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake build-unix",
+            "type": "shell",
+            "command": "cmake --build build-unix --config Debug",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "cmake build-msvc",
+            "type": "shell",
+            "command": "cmake --build build-msvc --config Debug",
+            "problemMatcher": [],
+            "group": "build"
+        }
+    ]
+}
