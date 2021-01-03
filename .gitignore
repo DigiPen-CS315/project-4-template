@@ -23,6 +23,7 @@ Testing/
 __MACOSX
 *.user
 docs/.keep
+*.csv
 
 #CMake
 CMakeFiles/
