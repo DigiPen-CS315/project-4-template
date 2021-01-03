@@ -80,5 +80,5 @@ jobs:
               cat ./build/HeapDebugger/Debug/DebugLog.csv;
             else
               	echo "Error Did not find DebugLog.csv!";
-                exit(-1);
+                exit -1;
             fi 
