@@ -57,7 +57,7 @@ jobs:
     - name: Build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build build --config RelWithDebInfo
+      run: cmake --build build --config Debug
 
     - name: Test 0
       shell: bash
@@ -75,9 +75,9 @@ jobs:
             elif [ -f "./build/HeapDebugger/DebugLog.csv" ] ; then 
               echo "Found DebugLog.csv";
               cat ./build/HeapDebugger/DebugLog.csv;
-            elif [ -f "./build/HeapDebugger/RelWithDebInfo/DebugLog.csv" ] ; then 
+            elif [ -f "./build/HeapDebugger/Debug/DebugLog.csv" ] ; then 
               echo "Found DebugLog.csv";
-              cat ./build/HeapDebugger/RelWithDebInfo/DebugLog.csv;
+              cat ./build/HeapDebugger/Debug/DebugLog.csv;
             else
               	echo "Error "Did not find DebugLog.csv!";
                 exit(-1);
