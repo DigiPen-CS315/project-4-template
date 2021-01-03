@@ -69,7 +69,7 @@ jobs:
       
     - name: Find DebugLog.csv	
       shell: bash	
-      run:  if [ -f "./DebugLog.csv" ] ; then |
+      run:  if [ -f "./DebugLog.csv" ] ; then
               echo "Found DebugLog.csv";
               cat DebugLog.csv;
             elif [ -f "./build/HeapDebugger/DebugLog.csv" ] ; then 
