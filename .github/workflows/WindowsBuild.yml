@@ -27,23 +27,35 @@ jobs:
         
     - name: Create Build Environment
       # Equivalent of mkdir 
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      run: cmake -E make_directory build
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
       # Run CMAKE to generate make file
-      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019" -A x64
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019" -A x64 -S . -B ./build
 
     - name: Build
-      working-directory: ${{runner.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build .
+      run: cmake --build ./build --config RelWithDebInfo
 
-#     - name: Test
-#       working-directory: ${{runner.workspace}}/build
-#       shell: bash
-#       run: ./HeapDebugger echo "Testing project"
+    - name: Test 0
+      run: ./build/HeapDebugger/RelWithDebInfo/HeapDebugger 0
+
+    - name: Test 1
+      run: ./build/HeapDebugger/RelWithDebInfo/HeapDebugger 1
+
+    - name: Find DebugLog.csv
+      shell: powershell
+      run:  |
+        if (Test-Path DebugLog.csv) {
+          echo "Found DebugLog.csv";
+          cat DebugLog.csv;
+        }
+        elseif (Test-Path .\build\HeapDebugger\RelWithDebInfo\DebugLog.csv) {
+          echo "Found DebugLog.csv";
+          cat .\build\HeapDebugger\RelWithDebInfo\DebugLog.csv;
+        }
+        else {
+          echo "Error Did not find DebugLog.csv!"; 
+          exit(-1);
+        }
