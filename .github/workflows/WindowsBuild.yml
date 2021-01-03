@@ -40,11 +40,11 @@ jobs:
 
     - name: Test 0
       shell: powershell
-      run: .\build\HeapDebugger\Debug\HeapDebugger.exe 0
+      run: .\build\Debug\HeapDebugger.exe 0
 
     - name: Test 1
       shell: powershell
-      run: .\build\HeapDebugger\Debug\HeapDebugger.exe 1
+      run: .\build\Debug\HeapDebugger.exe 1
 
     - name: Find DebugLog.csv
       shell: powershell
@@ -53,9 +53,9 @@ jobs:
           echo "Found DebugLog.csv";
           cat DebugLog.csv;
         }
-        elseif (Test-Path .\build\HeapDebugger\Debug\DebugLog.csv) {
+        elseif (Test-Path .\build\Debug\DebugLog.csv) {
           echo "Found DebugLog.csv";
-          cat .\build\HeapDebugger\Debug\DebugLog.csv;
+          cat .\build\Debug\DebugLog.csv;
         }
         else {
           echo "Error Did not find DebugLog.csv!"; 
