@@ -18,12 +18,12 @@ typedef std::basic_string<char, std::char_traits<char>, Mallocator<char>> Basic_
 #include <intrin.h>  // for _ReturnAddress()
 #pragma intrinsic(_ReturnAddress)
 
-#define GET_RETURN_ADDR(...) _ReturnAddress()
+#define GET_RETURN_ADDR() _ReturnAddress()
 #define GET_FILE_INFO() __FILE__
 #define GET_FUNCTION_INFO() __FUNCTION__
 #define GET_LINE_INFO() __LINE__
 
-#if defined (DEBUG)
+#if DEBUG
 #define DEBUG_BREAKPOINT() __debugbreak()
 #else
 #define DEBUG_BREAKPOINT() 
@@ -40,7 +40,7 @@ typedef std::basic_string<char, std::char_traits<char>, Mallocator<char>> Basic_
 #define GET_FUNCTION_INFO() __builtin_FUNCTION()
 #define GET_LINE_INFO() __builtin_LINE()
 
-#if defined (DEBUG)
+#if DEBUG
 #define DEBUG_BREAKPOINT() std::raise(SIGTRAP) // __builtin_trap() 
 #else
 #define DEBUG_BREAKPOINT() 
