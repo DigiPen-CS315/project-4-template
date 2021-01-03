@@ -1,4 +1,4 @@
-# Project 4 & 5 - Memory Debugger
+# Memory Debugger
 
 ## Compilers  
 - Cover which compilers your application targets
