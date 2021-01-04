@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-SET(ENABLE_GTEST true)
+SET(ENABLE_GTEST false)
 
 ##########################################################################################
 # DO NOT MODIFY                                                                         ##
@@ -58,13 +58,17 @@ endif()
 # Enable / disable debug code depending upon the build configuration.
 set(DEBUG_FLAGS "-DDEBUG=1")
 set(RELEASE_FLAGS "-DDEBUG=0")
+
 if(CMAKE_BUILD_TYPE MATCHES Deb)
   message("debug mode")
-  if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANGXX)
-    set(DEBUG_FLAGS "${DEBUG_FLAGS} -g -rdynamic")
+  set(DEBUG_FLAGS "${DEBUG_FLAGS} -g")
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    set(DEBUG_FLAGS "${DEBUG_FLAGS} -rdynamic")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}") 
   endif()
   if(CMAKE_COMPILER_IS_CLANGXX)
-    set(DEBUG_FLAGS "${DEBUG_FLAGS} -fshow-source-location")
+    set(DEBUG_FLAGS "${DEBUG_FLAGS} -fshow-source-location ")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-export_dynamic") 
   endif()
 endif()
 
@@ -92,7 +96,8 @@ include("${CMAKE_CURRENT_BINARY_DIR}/flags.cmake")
 
 set(C_FLAGS_WARNINGS "")
 if(MSVC)
-  set(C_FLAGS_WARNINGS "/W4 /WX")
+  add_compile_options("/EHsc")
+  set(C_FLAGS_WARNINGS "/W4 /WX")  
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANGXX)
   # Set the maximum warning level for gcc.
   set(C_FLAGS_WARNINGS "-Wall -Werror -Wno-long-long -Wno-variadic-macros")
@@ -187,7 +192,8 @@ if(ENABLE_GTEST)                                                                
                                                                                         ##
   create_test(run_unit_test)                                                            ##
   #add_test(NAME example_test COMMAND example)                                          ##
+                                                                                        ##
+  enable_testing()                                                                      ##
+                                                                                        ##
 endif()                                                                                 ##
 ##########################################################################################
-
-enable_testing()

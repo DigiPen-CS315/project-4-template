@@ -41,27 +41,44 @@ jobs:
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      run: cmake -E make_directory build
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
-      working-directory: ${{runner.workspace}}/build
       env:
         CXX: ${{ matrix.compiler }}
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE
+      run: cmake $GITHUB_WORKSPACE -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -Bbuild
 
     - name: Build
       shell: bash
-      working-directory: ${{runner.workspace}}/build
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . 
+      run: cmake --build build --config Debug
 
-#     - name: Test
-#       working-directory: ${{runner.workspace}}/build
-#       shell: bash
-#       run: ./HeapDebugger echo "Testing project"
+    - name: Test 0
+      shell: bash
+      run: ./build/HeapDebugger 0
+
+    - name: Test 1
+      shell: bash
+      run: ./build/HeapDebugger 1
+      
+    - name: Find DebugLog.csv	
+      shell: bash	
+      run:  if [ -f "./DebugLog.csv" ] ; then
+              echo "Found DebugLog.csv";
+              cat DebugLog.csv;
+            elif [ -f "./build/HeapDebugger/DebugLog.csv" ] ; then 
+              echo "Found DebugLog.csv";
+              cat ./build/HeapDebugger/DebugLog.csv;
+            elif [ -f "./build/HeapDebugger/Debug/DebugLog.csv" ] ; then 
+              echo "Found DebugLog.csv";
+              cat ./build/HeapDebugger/Debug/DebugLog.csv;
+            else
+              	echo "Error Did not find DebugLog.csv!";
+                exit -1;
+            fi 
