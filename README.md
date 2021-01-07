@@ -1,5 +1,5 @@
-Memory Debugger
----------------
+CS315 - Memory Debugger
+-----------------------
 
 <!-- Continuous Integration Tests -->
 <!-- Edit this document and replace the "liquidfun" repository name with the name of your repository "<_project-4-github-username_>" to display the results of your own tests (not of my template). You can delete this text. -->
