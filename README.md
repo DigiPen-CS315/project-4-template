@@ -1,4 +1,14 @@
-# Memory Debugger
+Memory Debugger
+---------------
+
+<!-- Continuous Integration Tests -->
+<!-- Edit this document and replace the "liquidfun" repository name with the name of your repository "<_project-4-github-username_>" to display the results of your own tests (not of my template). You can delete this text. -->
+![CMake_Windows_MSVC](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Windows_MSVC/badge.svg)  
+![CMake_Linux_Clang](https://github.com/DigiPen-CS315/project-4-template/CMake_Linux_Clang/badge.svg?)  
+
+#### Project Documentation: 
+- [Project4](https://github.com/DigiPen-CS315/CourseMaterials/tree/main/Projects/Project4/) - Windows/MSVC Memory Debugger
+- [Project5](https://github.com/DigiPen-CS315/CourseMaterials/tree/main/Projects/Project5/) - Linux/Clang Memory Debugger
 
 ## Compilers  
 - Cover which compilers your application targets
@@ -22,10 +32,3 @@
 
 ### How many hours the project took you:
 
-
-</br>  
-
-* * * * *   
-#### Project Documentation: 
-- [Project4](https://github.com/DigiPen-CS315/CourseMaterials/tree/main/Projects/Project4/) - Windows/MSVC Memory Debugger
-- [Project5](https://github.com/DigiPen-CS315/CourseMaterials/tree/main/Projects/Project5/) - Linux/Clang Memory Debugger
