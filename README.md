@@ -3,8 +3,10 @@ CS315 - Memory Debugger
 
 <!-- Continuous Integration Tests -->
 <!-- Edit this document and replace the "liquidfun" repository name with the name of your repository "<_project-4-github-username_>" to display the results of your own tests (not of my template). You can delete this text. -->
-![CMake_Windows_MSVC](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Windows_MSVC/badge.svg)  
-![CMake_Linux_Clang](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Linux_Clang/badge.svg?)  
+Edit this document and replace the "liquidfun" with the name of your repository "<github-repository-name>" to display the results of your own tests (not of my template). There are two instances to replace in each link. These badges are only updated from main branch, so you will not see the update until your development branch is merged into main.  
+
+[![CMake_Windows_MSVC](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Windows_MSVC/badge.svg)](https://github.com/DigiPen-CS315/project-4-template/actions)  
+[![CMake_Linux_Clang](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Linux_Clang/badge.svg?)](https://github.com/DigiPen-CS315/project-4-template/actions)  
 
 #### Project Documentation: 
 This solution will be shared for both Project 4 and 5.
