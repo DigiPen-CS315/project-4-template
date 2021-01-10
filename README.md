@@ -18,11 +18,11 @@ This solution will be shared for both Project 4 and 5.
     - [ ] msvc/Visual Studio [version]  
 
 ## Integration  
-- Cover how to integrate the memory debugger to a new project (replace this text)
+- Cover how to integrate the memory debugger to a new project <!-- replace this text -->
 
 ## Requirements  
-- What if any code/project changes are required to add it to an existing project (replace this text)
+- What, if any, code/project changes are required to add it to an existing project <!-- replace this text -->
 
 ## Output  
-- What is logged in the event of an error or leak <!-- replace this text -->
-- The type of output file, naming convention, etc. <!-- replace this text -->
+- What is logged in the event of a memory error or leak? <!-- replace this text -->
+    - Describe the type of output file, naming convention, etc. <!-- replace this text -->
