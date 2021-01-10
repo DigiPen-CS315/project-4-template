@@ -31,3 +31,8 @@
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation (README.md)
 - [ ] My changes generate no new warnings
+
+## Additional Information
+#### Areas of difficulty:
+
+#### How many hours the project took you:
