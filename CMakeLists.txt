@@ -68,7 +68,7 @@ if(CMAKE_BUILD_TYPE MATCHES Deb)
   endif()
   if(CMAKE_COMPILER_IS_CLANGXX)
     set(DEBUG_FLAGS "${DEBUG_FLAGS} -fshow-source-location ")
-    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-export_dynamic") 
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}") 
   endif()
 endif()
 

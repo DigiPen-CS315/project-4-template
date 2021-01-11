@@ -62,5 +62,6 @@
         "random": "cpp",
         "string_view": "cpp"
     },
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.buildTask": true,
 }
