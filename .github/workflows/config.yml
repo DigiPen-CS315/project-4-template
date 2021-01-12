@@ -1,0 +1,16 @@
+name: config
+on: create
+
+jobs:
+  config: # Test action's functionality
+    runs-on: ubuntu-latest
+    steps:
+    - name: Branch Proection
+      uses: infamous-riddles/branch-guardian@v1
+      with: 
+        PERSONAL-ACCESS-TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        BASE-BRANCH-PATTERN: '^main$'
+        REQUIRED-NUMBER-OF-REVIEWERS: 1
+        REQUIRED-STATUS-CHECKS: 'build, build (clang++), build (g++)'
+        REQUIRE-REVIEW-FROM-CODEOWNERS: 'true'
+        REQUIRE-LINEAR-HISTORY: 'true'
