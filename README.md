@@ -2,7 +2,9 @@ CS315 - Memory Debugger
 -----------------------
 
 ### Continuous Integration Tests  
-Edit this document and replace the "project-4-template" with the name of your repository "<_github-repository-name_>" to display the results of your own tests (not of my template). There are two instances to replace in each link. These badges are only updated from main branch, so you will not see the update until your development branch is merged into `main`.  <!-- You can delete this text. -->     
+Edit this document and replace the "project-4-template" with the name of your repository "<_github-repository-name_>" to display the results of your own tests (not of my template).   <!-- You can delete this text. -->  
+- There are two instances to replace in each link.   <!-- You can delete this text. -->  
+- These badges are only updated from main branch, so you will not see the update until your development branch is merged into `main`.  <!-- You can delete this text. -->     
 [![CMake_Windows_MSVC](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Windows_MSVC/badge.svg)](https://github.com/DigiPen-CS315/project-4-template/actions)  
 [![CMake_Linux_Clang](https://github.com/DigiPen-CS315/project-4-template/workflows/CMake_Linux_Clang/badge.svg?)](https://github.com/DigiPen-CS315/project-4-template/actions)  
 
