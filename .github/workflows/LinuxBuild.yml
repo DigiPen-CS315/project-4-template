@@ -1,4 +1,4 @@
-name: CMake_Linux_Clang
+name: CMake_Linux
 
 on: [push]
 
