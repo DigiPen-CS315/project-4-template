@@ -5,6 +5,7 @@ jobs:
   config: # Test action's functionality
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Branch Proection
       uses: infamous-riddles/branch-guardian@v1
       with: 
