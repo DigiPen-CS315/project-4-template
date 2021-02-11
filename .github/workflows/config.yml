@@ -1,5 +1,9 @@
 name: config
-on: create
+on: 
+  create:
+  push:
+    branches:
+    - main
 
 jobs:
   config: # Test action's functionality
