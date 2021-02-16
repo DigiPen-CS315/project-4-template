@@ -16,5 +16,5 @@ jobs:
         PERSONAL-ACCESS-TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         BASE-BRANCH-PATTERN: '^main$'
         REQUIRED-NUMBER-OF-REVIEWERS: 1
-        REQUIRED-STATUS-CHECKS: 'build-msvc, build-linux (g++), build-linux (clang++)'
+        REQUIRED-STATUS-CHECKS: 'build-msvc'
         REQUIRE-REVIEW-FROM-CODEOWNERS: 'true'
