@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+# set the project name
+project(HeapDebugger)
+
 SET(ENABLE_GTEST false)
 
 ##########################################################################################
@@ -139,9 +142,6 @@ endif (UNIX)
 
 message("Source Directory ${CMAKE_SOURCE_DIR}")
 FILE(GLOB SRCFILES "src/*.h" "src/*.cpp")
-
-# set the project name
-project(HeapDebugger)
 
 if(MSVC)
   FILE(GLOB TARGET_SRCFILES "src/msvc/*.h" "src/msvc/*.cpp")
